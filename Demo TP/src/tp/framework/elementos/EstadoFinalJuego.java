@@ -1,0 +1,43 @@
+package tp.framework.elementos;
+/*
+G Chess version 1.0
+Copyright (c) 2010 Gary Menezes
+
+Copyright Notice
+  You may not use this code for any commercial purpose.
+*/
+import java.awt.*;
+import javax.swing.*;
+
+public class EstadoFinalJuego extends PopupWindow
+{
+	private static final long serialVersionUID = 1400666790706351389L;
+	private JLabel text;
+	private JButton newGame, exit;
+	
+	public EstadoFinalJuego(GUI parent, String title)
+	{
+		super(parent, title);
+		
+		text = new JLabel("The game ended in a "+title+"!");
+		newGame = new JButton("New Game");
+		exit = new JButton("Exit");
+		newGame.setActionCommand("-10");
+		exit.setActionCommand("-11");
+		newGame.addActionListener(parent);
+		exit.addActionListener(parent);
+		
+		JPanel top = new JPanel();
+		top.setBackground(new Color(0,0,0,0));
+		top.add(text);
+		JPanel bottom = new JPanel();
+		bottom.setBackground(new Color(0,0,0,0));
+		bottom.add(newGame);
+		bottom.add(exit);
+		add(top);
+		add(bottom);
+		
+		pack();
+		resetLocation();
+	}
+}
