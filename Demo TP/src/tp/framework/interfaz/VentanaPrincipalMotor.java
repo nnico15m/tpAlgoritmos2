@@ -1,46 +1,42 @@
 package tp.framework.interfaz;
 
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JButton;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import tp.framework.elementos.Jugador;
-import tp.framework.juego.Juego;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;;
+
+import javax.swing.DefaultListModel;
 
 public class VentanaPrincipalMotor
 {
-
 	private JFrame frame;
 	private JTextField textJugador1;
-	private JTextField txtJugador2;
-	private JButton buttonAceptarJugador2;
-	private JButton botonListaJuegos;
-	private String juegoSeleccionado;
-	private String metodoParaJuegoSeleccionado;
+	private JTextField textJugador2;
 	private Jugador jugador1;
 	private Jugador jugador2;
 	private String metodoSetearJugadores = "setJugadores";
 	private String metodoInicializarJuego = "inicializate";
 	static VentanaPrincipalMotor window;
-	static boolean flagJugador1 = false;
-	static boolean flagJugador2 = false;
-	static boolean  flagJuegoSelccionado = false;
 	static JButton btnJugar;
 	static boolean juegoTerminado;
 	TablaLista TablaLista;
-	private JButton btnAceptarJugador1;
+	private JList<String> list;
+	private DefaultListModel<String> DLM;	
 	
 	/**
 	 * Launch the application.
@@ -75,93 +71,91 @@ public class VentanaPrincipalMotor
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	private void crearForm(){
+		frame=new JFrame();
+		frame.getContentPane().setBackground(Color.WHITE);
+		frame.setBounds(100,100,780,300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+	}
+	private void crearTitulo(int x, int y, int w, int h, String text, int tam){
+		JLabel ret = new JLabel(text);
+		ret.setForeground(Color.BLACK);
+		ret.setBounds(x, y, w, h);
+		ret.setFont(new Font("Times New Roman", Font.BOLD, tam));
+		frame.getContentPane().add(ret);
+	}
+
+	private JTextField textBoxJugador(int x, int y, int w, int h){
+		JTextField ret = new JTextField();
+		ret.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		ret.setText(null);
+		ret.setBounds(x, y, w, h);
+		ret.setColumns(10);
+		frame.getContentPane().add(ret);
+		return ret;
+	}
+	
+	private JButton crearBoton(int x, int y, int w, int h, String text){
+		JButton ret = new JButton(text);
+		ret.setEnabled(true);
+		ret.setBackground(Color.BLACK);
+		ret.setForeground(Color.WHITE);
+		ret.setBounds(x, y, w, h);
+		frame.getContentPane().add(ret);
+		
+		return ret;
+	}
 	
 	private void initialize()
 	{
-		frame=new JFrame();
-		frame.getContentPane().setBackground(Color.GRAY);
-		frame.setBounds(100,100,724,499);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		crearForm();
+		crearTitulo(10, 10, 250, 35, "Motor de Juegos", 30);
 		
-		JLabel lblNewLabel = new JLabel("MOTOR DE JUEGOS ");
-		lblNewLabel.setForeground(Color.RED);
-		lblNewLabel.setBounds(247, 24, 158, 47);
-		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		frame.getContentPane().add(lblNewLabel);
+		crearTitulo(10, 50, 250, 35, "Jugador1", 20);
+		textJugador1 = textBoxJugador(10, 80, 237, 27);
 		
-		txtJugador2 = new JTextField();
-		txtJugador2.setFont(new Font("Times New Roman", Font.PLAIN, 13));
-		txtJugador2.setText(null);
-		txtJugador2.setBounds(62, 197, 253, 31);
-		txtJugador2.setColumns(10);
-		frame.getContentPane().add(txtJugador2);
+		crearTitulo(10, 120, 250, 35, "Jugador2", 20);
+		textJugador2 = textBoxJugador(10, 150, 237, 27);
 		
-		btnJugar = new JButton("JUGAR");
-		btnJugar.setEnabled(false);
+		btnJugar = crearBoton(10, 200, 100, 30, "Jugar");
 		btnJugar.addActionListener(new BtnNewButton_2ActionListener());
-		btnJugar.setBackground(Color.WHITE);
-		btnJugar.setForeground(Color.BLACK);
-		btnJugar.setBounds(418, 320, 148, 57);
-		frame.getContentPane().add(btnJugar);
+
+		crearTitulo(330, 20, 250, 35, "Demos", 25);
+
+		list = crearListado();
+		DLM = new DefaultListModel<String>();
+		list.setModel(DLM);
 		
-		textJugador1 = new JTextField();
-		textJugador1.setText(null);
-		textJugador1.setFont(new Font("Times New Roman", Font.PLAIN, 13));
-		textJugador1.setToolTipText("");
-		textJugador1.setBackground(Color.WHITE);
-		textJugador1.setForeground(Color.DARK_GRAY);
-		textJugador1.setBounds(62, 112, 253, 31);
-		frame.getContentPane().add(textJugador1);
-		textJugador1.setColumns(10);
-		
-		buttonAceptarJugador2 = new JButton("Aceptar Jugador 2");
-		buttonAceptarJugador2.addActionListener(new ButtonActionListener());
-		buttonAceptarJugador2.setBounds(418, 199, 166, 27);
-		frame.getContentPane().add(buttonAceptarJugador2);
-		
-		botonListaJuegos = new JButton("Ver Lista Juegos");
-		botonListaJuegos.addActionListener(new BotonListaJuegosActionListener());
-		botonListaJuegos.setBounds(110, 320, 177, 57);
-		frame.getContentPane().add(botonListaJuegos);
-		
-		btnAceptarJugador1 = new JButton("Aceptar Jugador 1");
-		btnAceptarJugador1.addActionListener(new BtnAceptarJugador1ActionListener());
-		btnAceptarJugador1.setBounds(418, 114, 166, 27);
-		frame.getContentPane().add(btnAceptarJugador1);
+		DLM.addElement("Tateti");
+		DLM.addElement("Damas");
+		DLM.addElement("Ajedrez");
 		
 		setJugador1(new Jugador());
 		setJugador2(new Jugador());
 	}
-	private class ButtonActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent evento) {
-			
-			if(evento.getSource() == buttonAceptarJugador2)
-			{
-				jugador2.setJugadorNombre(txtJugador2.getText());
-				flagJugador2 = true;
-				VentanaPrincipalMotor.verificarJugabilidad();
-				JOptionPane.showMessageDialog(null,txtJugador2.getText());
-				
-			}
-			
-		}
+
+	private JList<String> crearListado()
+	{
+		JList<String> ret = new JList<String>();
+		ret.setToolTipText("");
+		ret.setForeground(Color.WHITE);
+		ret.setBackground(Color.DARK_GRAY);
+		ret.setBounds(330, 50, 255, 180);
+		
+		ret.setEnabled(true);
+		frame.getContentPane().add(ret);
+		
+		return ret;	
 	}
-	private class BotonListaJuegosActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			
-			TablaLista = new TablaLista();
-			TablaLista.setVentana(window);
-			TablaLista.setVisible(true);
-			
-		}
-	}
+
 	private class BtnNewButton_2ActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			
 			if(e.getSource() == btnJugar){
+				jugador1.setJugadorNombre(textJugador1.getText());
+				jugador2.setJugadorNombre(textJugador2.getText());
 				
-				JOptionPane.showMessageDialog(null,"EL juego " + getJuegoSeleccionado() + " esta por comenzar");
 				try
 				{
 						
@@ -174,7 +168,7 @@ public class VentanaPrincipalMotor
 						
 					}
 					
-					Class<?> juego = Class.forName("tp.framework.juego."+ getJuegoSeleccionado());
+					Class<?> juego = Class.forName("tp.framework.juego." + DLM.get(list.getSelectedIndex()));
 					
 					Object ob = juego.getConstructor(null).newInstance(null); //Creo un objeto generico --> Lo instancio
 					ob.getClass().getMethod(metodoSetearJugadores,clases).invoke(ob,parametros);
@@ -182,6 +176,7 @@ public class VentanaPrincipalMotor
 					ob.getClass().getMethod(metodoInicializarJuego,null).invoke(ob,null);
 										
 				}
+				
 				catch(ClassNotFoundException ex)
 				{
 					JOptionPane.showMessageDialog(null,"Ocurrio un error");
@@ -223,57 +218,11 @@ public class VentanaPrincipalMotor
 			
 		}
 	}
-	private class BtnAceptarJugador1ActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			
-			if(e.getSource() == btnAceptarJugador1)
-			{
-				jugador1.setJugadorNombre(textJugador1.getText());
-				flagJugador1 = true;
-				VentanaPrincipalMotor.verificarJugabilidad();
-				JOptionPane.showMessageDialog(null,textJugador1.getText());
-				
-												
-			}
-			
-			
-		}
-	}
-	
-
-	public String getJuegoSeleccionado()
-	{
-		return juegoSeleccionado;
-	}
-
-	public static void verificarJugabilidad()
-	{
-		if(flagJuegoSelccionado == true && flagJugador1 == true && flagJugador2 == true){
-			
-			btnJugar.setEnabled(true);
-		}
-		
-	}
 
 	public void setJuegoSeleccionado(String juegoSeleccionado)
 	{
-		this.juegoSeleccionado = juegoSeleccionado;
+		//this.juegoSeleccionado = juegoSeleccionado;
 		TablaLista.setVisible(false);
-		flagJuegoSelccionado = true;
-		verificarJugabilidad();
-		JOptionPane.showMessageDialog(null,"El juego seleccionado es : " + this.getJuegoSeleccionado());
-	}
-
-	
-
-	public String getMetodoParaJuegoSeleccionado()
-	{
-		return metodoParaJuegoSeleccionado;
-	}
-
-	public void setMetodoParaJuegoSeleccionado(String metodoParaJuegoSeleccionado)
-	{
-		this.metodoParaJuegoSeleccionado = metodoParaJuegoSeleccionado;
 	}
 
 	public Jugador getJugador1()
