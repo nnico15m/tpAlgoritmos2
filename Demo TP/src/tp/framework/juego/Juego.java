@@ -1,11 +1,18 @@
 package tp.framework.juego;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
+
 import javax.swing.JFrame;
 import tp.framework.elementos.Jugador;
 import tp.framework.elementos.Tablero;
 
-public abstract class Juego extends JFrame implements ActionListener
+import java.applet.Applet;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public abstract class Juego extends JFrame implements MouseListener,ActionListener
 {
 	/**
 	 * 
@@ -84,8 +91,11 @@ public abstract class Juego extends JFrame implements ActionListener
 		
 	}
 
-	
+	public void invocar()
+	{
+		
+		//super ("Cuatro en Raya");
+		
+	}
 
-	
-	
 }

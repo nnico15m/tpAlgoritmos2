@@ -130,6 +130,7 @@ public class VentanaPrincipalMotor
 		DLM.addElement("Tateti");
 		DLM.addElement("Damas");
 		DLM.addElement("Ajedrez");
+		DLM.addElement("CuatroRaya");
 		
 		setJugador1(new Jugador());
 		setJugador2(new Jugador());

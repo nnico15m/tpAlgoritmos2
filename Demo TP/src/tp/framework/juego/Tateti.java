@@ -1,7 +1,9 @@
 package tp.framework.juego;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 
+import tp.framework.elementos.Jugador;
 import tp.framework.elementos.Tablero;
 import tp.framework.elementos.TableroTateti;
 
@@ -16,6 +18,10 @@ public class Tateti extends Juego
 	
 	Tateti tateti;
 	Tablero[][]tablero;
+	private Jugador jugador1;
+	private Jugador jugador2;
+	private String nombreJugador1 = null;
+	private String nombreJugador2 = null;
 	
 	public Tateti() {
 		setTitle("TA-TE-TI");
@@ -167,8 +173,39 @@ public class Tateti extends Juego
 		
 	}
 
-	
+	@Override
+	public void mouseClicked(MouseEvent e)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 
-	
+	@Override
+	public void mousePressed(MouseEvent e)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

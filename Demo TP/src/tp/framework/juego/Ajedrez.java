@@ -1,5 +1,6 @@
 package tp.framework.juego;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 
 /*
 G Chess version 1.0
@@ -56,6 +57,41 @@ public class Ajedrez extends Juego {
 
 	@Override
 	public void realizarTiro(Tablero X)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e)
 	{
 		// TODO Auto-generated method stub
 		
